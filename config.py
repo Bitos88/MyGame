@@ -5,9 +5,9 @@ class Config():
         self.screenH = 800
         self.bgCOLOR = (230, 230, 230)
         self.shipSpeed = 3.5
-        self.meteorSpeed = 1.5
+        self.meteorSpeed = 1.2
 
         self.bulletSpeed = 2.5
-        self.bulletWidth = 3
+        self.bulletWidth = 5
         self.bulletHeight= 15
-        self.bulletColor = 60,60,60
+        self.bulletColor = 255,255,255

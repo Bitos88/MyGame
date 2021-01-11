@@ -24,6 +24,8 @@ def check_keyDown_events(event, ship, aiSettings, screen, bullets):
     elif event.key == pygame.K_SPACE:
         newBullet = Bullet(aiSettings, screen, ship)
         bullets.add(newBullet)
+        pygame.mixer.music.load("sounds/laser.mp3")
+        pygame.mixer.music.play()
     elif event.key == pygame.K_q:
         sys.exit()
 
@@ -39,12 +41,15 @@ def check_keyUp_events(event, ship):
 
 
 
-def updateScreen(aiSettings, screen, ship, meteor, bullets):
-    screen.fill(aiSettings.bgCOLOR)
+def updateScreen(aiSettings, screen, ship, meteors, bullets):
+    #screen.fill(aiSettings.bgCOLOR)
     for bullet in bullets.sprites():
         bullet.drawBullet()
 
+    for meteoritos in meteors.sprites():
+        meteoritos.blitme()
+
+
     ship.blitme()
-    meteor.blitme()
     pygame.display.flip()
 

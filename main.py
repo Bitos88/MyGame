@@ -12,32 +12,59 @@ def runGame(): #funcion que iniciara el juego
     aiSettings = Config()
     screen = pygame.display.set_mode((aiSettings.screenW, aiSettings.screenH)) #instanciamos el objeto para definir las dimensiones de la ventana
     imagen_defondo = pygame.image.load("images/space.jpg").convert()
-    screen.blit(imagen_defondo, [0, 0])
+    rectangulo = imagen_defondo.get_rect()
+    screen.blit(imagen_defondo, (0, 0))
     pygame.display.set_caption("ALIEN INVASION") #Titulo de nuestra ventana
+    pygame.mixer.init()
+    pygame.display.init()
 
     bgCOLOR = (230, 230, 230)
 
     ship = Ship(aiSettings, screen)
     meteor = Meteor(aiSettings, screen)
-    meteors = Group()
     bullets = Group()
+    meteoritos = Group()
 
-    x = 1
+    tiempo = 1
+    puntuacion = 0
+
+    letra = pygame.font.SysFont("Arial", 18)
 
     while True:
-        if x %200 == 0:
-            print(x)
+
+
+        if tiempo == 1 or tiempo %100 == 0:
+            meteor = Meteor(aiSettings, screen)
+            meteoritos.add(meteor)
+        
         gf.check_events(ship, aiSettings, screen, bullets)
         ship.update()
         bullets.update()
-        meteor.update()
-        gf.updateScreen(aiSettings, screen, ship, meteor, bullets)
+        meteoritos.update()
+        gf.updateScreen(aiSettings, screen, ship, meteoritos, bullets)
+
+        ship.animation()
         
-        x +=1 
+
 
         for bullet in bullets.copy():
             if bullet.rect.left >= 1200:
                 bullets.remove(bullet)
+
+        for x in meteoritos.copy():
+            if x.rect.right <= 0:
+                meteoritos.remove(x)
+
+        if pygame.sprite.groupcollide(meteoritos, bullets, True, True):
+            puntuacion +=1
+
+            print(puntuacion)
+
+
+        gf.updateScreen(aiSettings, screen, ship, meteoritos, bullets)
+        screen.blit(imagen_defondo, (0,0))
+
+        tiempo += 1
 
 
 runGame()

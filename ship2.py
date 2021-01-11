@@ -1,9 +1,12 @@
 import pygame
+import random
 from pygame.sprite import Sprite
 
-class Ship():
 
+class Ship2(Sprite):
     def __init__(self, aiSettings, screen):
+        super(Ship2, self).__init__()
+
         self.screen = screen
         self.aiSettings = aiSettings
 
